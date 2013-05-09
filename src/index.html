@@ -15,7 +15,7 @@
 </head>
 <body>
 	<header id="sitename">
-		<h1 id="logo"><a href="#">Todo</a></h1>
+		<h1 id="logo">Todo</h1>
 	</header>
 
 	<section id="mainRegion">
@@ -37,6 +37,12 @@
 
 	<script id="addTodoView" type="text/template">
 		<input type="text" id="addTodo" name="addTodo" placeholder="Add a todo" />
+	</script>
+
+	<script id="editTodoView" type="text/template">
+		<form>
+			<input type="text" id="editTodo" name="editTodo" placeholder="A description for this todo please" value="<%= description %>" />
+		</form>
 	</script>
 </body>
 </html>

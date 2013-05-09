@@ -69,3 +69,12 @@ ul#todosList li.todo {
 li.todo input[type=checkbox] {
 	margin-right: 10px;
 }
+
+li.todo input#editTodo {
+	background: #ECF0F1;
+	color: #2C3E50;
+	padding: 5px;
+	border: none;
+	outline: none;
+	min-width: 360px;
+}

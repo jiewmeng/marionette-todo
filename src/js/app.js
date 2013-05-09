@@ -26,9 +26,42 @@ $(function() {
 	 * # Views Initialization
 	 */
 	todoApp.views.TodoView = Backbone.Marionette.ItemView.extend({
-		template: "#todoView",
 		tagName: "li",
-		className: "todo"
+		className: "todo",
+		getTemplate: function() {
+			console.log("getting template");
+			if (this.mode == "edit") {
+				return "#editTodoView";
+			} else {
+				return "#todoView";
+			}
+		},
+		triggers: {
+			"dblclick": "editMode",
+			"blur #editTodo": "saveTodo",
+			"submit": "saveTodo"
+		},
+		initialize: function() {
+			this.on("editMode", function() {
+				if (this.mode != "edit") {
+					this.mode = "edit";
+					this.render();
+					this.$("#editTodo").select();
+				}
+			});
+
+			this.on("viewMode", function() {
+				if (this.mode == "edit") {
+					this.mode = "view";
+					this.render();
+				}
+			});
+
+			this.on("saveTodo", function() {
+				this.model.save({ description: this.$("#editTodo").val() });
+				this.trigger("viewMode");
+			});
+		}
 	});
 
 	todoApp.views.TodosEmptyView = Backbone.Marionette.ItemView.extend({
@@ -52,6 +85,7 @@ $(function() {
 			this.on("addTodo", function() {
 				this.collection.add(
 					new todoApp.models.Todo({ description: this.$field.val() }));
+				this.$field.val("");
 				return false;
 			});
 		},
